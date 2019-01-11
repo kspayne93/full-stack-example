@@ -21,7 +21,7 @@ export default function reducer(state = initialState, action) { //reducer functi
    switch(action.type) {
       case GET_USER_DATA:
          return { ...state, user: action.payload  } //spread operator (...state) copies everything that was on state before to the new copy of state. the second parameter overwrites key value pair on the new copy of state, or inserts it if it wasn't there before. 
-         //same as return { {}, state, user: action.payload }
+         //same as return Object.assign( {}, state, {user: action.payload});
          
       default:
          return state;
