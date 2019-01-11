@@ -10,8 +10,7 @@ class Private extends Component {
    async componentDidMount() {
       try {
          const res = await axios.get('/api/user-data'); //getting the user data
-         // invoke action creator, passing in logged in user's data
-         this.props.getUserData(res.data);
+         this.props.getUserData(res.data); // invoking action creator, passing in logged in user's data
       } catch(e) { //e stands for error
          console.log('Error: Not logged in', e)
          Swal({
