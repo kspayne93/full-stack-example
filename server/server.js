@@ -34,3 +34,5 @@ app.get('/auth/logout', (req,res) => {
    res.redirect('http://localhost:3000/#/')
 })
 
+
+//app.use(express.static( `${_dirname}/../build` ) )
