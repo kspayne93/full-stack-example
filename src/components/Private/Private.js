@@ -27,6 +27,15 @@ class Private extends Component {
       return Math.floor( (Math.random() + 1) * 1000000 ) //Math.floor rounds DOWN to the nearest integer. Math.random gives us a random number between 0 and .9999999
    }
 
+   async logoutSuccess() {
+      await Swal({
+         type: 'success',
+         title: 'Woohoo!!',
+         text: 'You have successfully logged out.'
+      })
+      this.props.history.push('/') //routes user back to home page.
+   }
+
    render() {
       console.log(this.props) //this should show this.props.user
       const { id, email } = this.props.user; //if user is not logged in, this.props.user will be an empty object. If they're logged in, we'll have the user info
@@ -41,9 +50,9 @@ class Private extends Component {
                      <p>Account Email {email}:</p>
                      <p>Account ID: {id} </p>
                      <p>Balance: ${this.balance()}.00 </p>
-                     <a href="http://localhost:4000/auth/logout">
-                        <button>Logout</button>
-                     </a>
+                    
+                        <button onClick={() => this.logoutSuccess()} >Logout</button>
+                     
                   </div>
                ) : <p>Please log in <Link to='/'>here</Link> </p> //this gets displayed if they are not logged in.
             }
