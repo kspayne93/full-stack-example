@@ -12,7 +12,7 @@ module.exports = {
       const hash = bcrypt.hashSync(password, salt) //hash must come after salt. Hash will take in the password and salt as parameters, then hash them.
       let newAccArr = await db.create_acc({ email: email, hash: hash }); //creating account. sending email and hash to create_acc.sql to be inserted into db table.
       req.session.user = {id: newAccArr[0].acc_id, email: newAccArr[0].acc_email} //adding user info/credentials to session with id and email.
-      req.status(200).send({ message: 'logged in', userData: req.session.user, loggedIn: true }) //sending back ok status and user's session info.
+      res.status(200).send({ message: 'logged in', userData: req.session.user, loggedIn: true }) //sending back ok status and user's session info.
    },
 
    login: async (req, res) => {
