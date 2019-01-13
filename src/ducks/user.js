@@ -1,7 +1,7 @@
 //This is the reducer file
 
 const initialState = {
-   user: {}
+   user: {} //user data is being kept in the Redux store's state. Initially set to an empty object.
 }
 
 // ACTION TYPES
@@ -9,7 +9,7 @@ const GET_USER_DATA = 'GET_USER_DATA'
 
 
 //ACTION CREATORS
-export function getUserData(userInfo) { //res.data is getting passed in as userInfo
+export function getUserData(userInfo) { //res.data (the data that came back from our axios request in Private.js) is getting passed in as userInfo
    return {
       type: GET_USER_DATA,
       payload: userInfo
