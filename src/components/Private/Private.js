@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { connect } from 'react-redux'; //connect is a function, not a component
-import { getUserData } from './../../ducks/user';
+import { connect } from 'react-redux'; //connect is a function, not a component. This allows us to get info and update redux store state.
+import { getUserData } from './../../ducks/user'; //reducer function coming from user.js (reducer file)/
 import {Link} from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 
 class Private extends Component {
+   
    async componentDidMount() {
       try {
          const res = await axios.get('/api/user-data'); //getting the user data
-         this.props.getUserData(res.data); // invoking action creator, passing in logged in user's data
+         this.props.getUserData(res.data); // invoking action creator in the store, passing in logged in user's data. 
       } catch(e) { //e stands for error
          console.log('Error: Not logged in', e)
          Swal({
@@ -49,8 +50,7 @@ class Private extends Component {
                      <p>Account Email {email}:</p>
                      <p>Account ID: {id} </p>
                      <p>Balance: ${this.balance()}.00 </p>
-                    
-                        <button onClick={() => this.logoutSuccess()} >Logout</button>
+                     <button onClick={() => this.logoutSuccess()} >Logout</button>
                      
                   </div>
                ) : <p>Please log in <Link to='/'>here</Link> </p> //this gets displayed if they are not logged in.
@@ -60,18 +60,17 @@ class Private extends Component {
    }
 }
 
-const mapStateToProps = (reduxState) => reduxState;
-//return redux state from mapStateToProps
+const mapStateToProps = (reduxState) => reduxState; // getting the redux store and mapping it to this component. Information from the redux store is added to this component and can be accessed through this.props.
 // all key/value pairs from redux store get added to this.props
 
-// //This also works:
+// //This also works to map redux state to this.props:
 // function mapStateToProps (reduxState) {
 //    return reduxState
 // }
 
-export default connect(mapStateToProps, {getUserData})(Private) // connect is invoked twice. The result of invoking connect is another function (inner) which is then invoked with the second set of parentheses. javascript reads this from left to right. connect gets invoked first and takes in mapState. As soon as this state is connected, it will pass in the entire redux store state to this function. Whatever we return from this function gets added to the props object. 
-
-
+export default connect(mapStateToProps, {getUserData})(Private) // connect is invoked twice. The result of invoking connect is another function (inner) which is then invoked with the second set of parentheses. javascript reads this from left to right. connect gets invoked first and takes in mapStateToProps. As soon as this state is connected, it will pass in the entire redux store state to this function. Whatever we return from this function gets added to the props object. 
 
 
 //NOTES
+
+//the second parameter that the connect function takes in is a Dispatch (mapDispatchToProps). Dispatching an action is how you update Redux state, so in this case the action being dispatched is getUserData from the user.js file(reducer file). Up above, our axios request retrieves user data from the database. Once that data comes back, the getUserData function from the store gets invoked and the user data gets passed into it, and the store state gets updated with the new information. 

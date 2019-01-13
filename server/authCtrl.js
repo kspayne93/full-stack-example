@@ -19,7 +19,7 @@ module.exports = {
       const { email, password } = req.body;
       const db = req.app.get('db');
       const accountArr = await db.find_acc_email({ email:email });
-      if(!accountArr[0]) { //if accountArr at position 0 doesn't exist, meaning user is not found. The database sends back an array of a single object, so position [0] means the array has an object (therefore a user)
+      if(!accountArr[0]) { //if accountArr at position 0 doesn't exist, meaning user is not found. The database sends back an array containing a single object, so position [0] means the array has an object (therefore, a user was found).
          return res.status(200).send({message: 'Email not found.'});
       }
       const result = bcrypt.compareSync(password, accountArr[0].acc_hash) //taking in plain text password from req.body and comparing it to the info from the hash. (does the incoming password match up with hash value in database). Results in boolean (truthy or falsy).
@@ -36,7 +36,7 @@ module.exports = {
       } else {
          res.status(401).send('Please log in.');
       }
-   }
+   } 
 }
 
 
