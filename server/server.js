@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const session = require('express-session')
+const session = require('express-session');
 const massive = require('massive');
 const authCtrl = require('./authCtrl');
 
@@ -10,6 +10,7 @@ const app = express();
 
 //MIDDLEWARE
 app.use(express.json());
+
 app.use(session({
    secret: SECRET,
    resave: false,
@@ -22,7 +23,7 @@ massive(CONNECTION_STRING).then(db => {
    app.listen(SERVER_PORT, () => { 
       console.log(`Listening on port: ${SERVER_PORT}`) //putting the listen method in the .then ensures that the server won't watch for changes or update until after the database is connected
    })
- })
+})
 
 
 //ENDPOINTS

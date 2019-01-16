@@ -18,7 +18,7 @@ module.exports = {
    login: async (req, res) => {
       const { email, password } = req.body;
       const db = req.app.get('db');
-      const accountArr = await db.find_acc_email({ email:email });
+      const accountArr = await db.find_acc_email({ email:email }); //this returns an array with a single object. that object is the user.
       if(!accountArr[0]) { //if accountArr at position 0 doesn't exist, meaning user is not found. The database sends back an array containing a single object, so position [0] means the array has an object (therefore, a user was found).
          return res.status(200).send({message: 'Email not found.'});
       }
